@@ -34,7 +34,7 @@ public class ParametrizedTests extends TestBase {
     @CsvFileSource(resources = "/test_data/searchResultsShouldContainExpectedItems.csv")
     @ParameterizedTest(name = "Для поискового запроса {0} первый результат содержит название курса {1}")
     @Tag("BLOCKER")
-    void searchResultsShouldContainExpectedURL(String searchItems, String expectedText) {
+    void searchResultsShouldContainExpectedCourse(String searchItems, String expectedText) {
         $("[placeholder= 'Поиск…']").setValue(searchItems).pressEnter();
         $(".course-card__title").shouldHave(text(expectedText));
 
@@ -43,7 +43,7 @@ public class ParametrizedTests extends TestBase {
     @EnumSource(Languages.class)
     @ParameterizedTest(name =  "Для поискового запроса результат содержит названия для языка {0}")
     @Tag("WEB")
-    void selenideSiteShouldDisplayCorrectText(Languages languages){
+    void stepikSiteShouldDisplayCorrectText(Languages languages){
         $("#ember23").click();
         $(".drop-down__body").find(byText(languages.name())).click();
         $(".catalog-block__title",0).shouldHave(text(languages.descriptionFirst));
@@ -52,7 +52,7 @@ public class ParametrizedTests extends TestBase {
 
     }
 
-    static Stream<Arguments> StepikSourceShouldContainsLanguageLists() {
+    static Stream<Arguments> stepikSourceShouldContainsLanguageLists() {
         return Stream.of(
                 Arguments.of(Languages.Русский, List.of(
                         "Новые курсы",
@@ -77,7 +77,7 @@ public class ParametrizedTests extends TestBase {
     }
     @MethodSource
     @ParameterizedTest(name = "Для поискового запроса с языком {0} первый результат содержит тайтлы - {1}")
-    void StepikSourceShouldContainsLanguageLists(Languages languages, List<String> expectedButtons){
+    void stepikSourceShouldContainsLanguageLists(Languages languages, List<String> expectedButtons){
         $("#ember23").click();
         $(".drop-down__body").find(byText(languages.name())).click();
         $$(".tab__item").shouldHave(texts(expectedButtons));
